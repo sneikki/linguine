@@ -1,6 +1,7 @@
 import os
 from sys import stderr, exit
-import json, csv
+import json
+import csv
 
 
 def fail(reason, exit_code=1):
