@@ -4,4 +4,6 @@
 
 ## Example use
 
-`./linguine en-GB.json FI.json --output en-GB-FI-aligned.csv`
+```
+./linguine source.json target.json --output tm-input.csv
+```
