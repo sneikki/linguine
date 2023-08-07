@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 
 from util import fail, read_json, write_csv, get_basename
