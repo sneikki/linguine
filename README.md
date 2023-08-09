@@ -2,6 +2,8 @@
 
 > Requires Python 3
 
+Helper script for language translation, automates the alignment of dictionaries created for different languages
+
 ## Example use
 
 ```
