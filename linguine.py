@@ -4,6 +4,20 @@ import sys
 
 from util import fail, read_json, write_csv, get_basename
 
+from collections.abc import MutableMapping
+
+def _flatten_dict_gen(d, parent_key, sep):
+    for k, v in d.items():
+        new_key = parent_key + sep + k if parent_key else k
+        if isinstance(v, MutableMapping):
+            yield from flatten_dict(v, new_key, sep=sep).items()
+        else:
+            yield new_key, v
+
+
+def flatten_dict(d: MutableMapping, parent_key: str = '', sep: str = '.'):
+    return dict(_flatten_dict_gen(d, parent_key, sep))
+
 
 def run():
     args = sys.argv[1:]
@@ -25,8 +39,8 @@ def run():
     if len(json_paths) != 2:
         fail("path to the JSON files are required")
 
-    source_dict = read_json(json_paths[0])
-    target_dict = read_json(json_paths[1])
+    source_dict = flatten_dict(read_json(json_paths[0]))
+    target_dict = flatten_dict(read_json(json_paths[1]))
     value_pairs = []
 
     for key, value in source_dict.items():
