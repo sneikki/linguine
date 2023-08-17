@@ -7,7 +7,7 @@ import csv
 def fail(reason, exit_code=1):
     stderr.writelines([
         f"Error -- {reason}\n",
-        "\nUsage: linguine <json-file> <json-file> [-o|--output <output-file>]\n"
+        "\nUsage: linguine <json-file> <json-file> [-o|--output <output-file>] [-e|--encoding <encoding>]\n"
     ])
     exit(exit_code)
 
@@ -16,11 +16,13 @@ def get_basename(path):
     return os.path.splitext(os.path.basename(path))[0]
 
 
-def read_json(path):
+def read_json(path, encoding):
     try:
-        return json.load(open(path, mode="r"))
+        return json.load(open(path, mode="r", encoding=encoding))
     except OSError:
         fail(f"{path}: no such file exists")
+    except LookupError:
+        fail(f"{encoding}: invalid encoding")
     except json.decoder.JSONDecodeError:
         fail(f"{path}: invalid format")
 

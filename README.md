@@ -7,5 +7,5 @@ Helper script for language translation, automates the alignment of dictionaries 
 ## Example use
 
 ```
-./linguine source.json target.json --output tm-input.csv
+./linguine source.json target.json --output tm-input.csv --encoding utf8
 ```

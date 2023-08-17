@@ -22,6 +22,7 @@ def flatten_dict(d: MutableMapping, parent_key: str = '', sep: str = '.'):
 def run():
     args = sys.argv[1:]
     output_path = None
+    encoding = "utf8"
     json_paths = []
 
     while len(args) > 0:
@@ -33,14 +34,19 @@ def run():
             except IndexError:
                 fail(
                     f"""Path for the output file must be specified when using "{arg}" flag""")
+        elif arg in ["-e", "--encoding"]:
+            try:
+                encoding = args.pop(0)
+            except IndexError:
+                fail(f"""Encoding must be specified when using "{arg}" flag""")
         else:
             json_paths.append(arg)
 
     if len(json_paths) != 2:
         fail("path to the JSON files are required")
 
-    source_dict = flatten_dict(read_json(json_paths[0]))
-    target_dict = flatten_dict(read_json(json_paths[1]))
+    source_dict = flatten_dict(read_json(json_paths[0], encoding))
+    target_dict = flatten_dict(read_json(json_paths[1], encoding))
     value_pairs = []
 
     for key, value in source_dict.items():
